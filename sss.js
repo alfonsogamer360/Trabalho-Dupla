@@ -23,7 +23,7 @@ function vendasMesTotal(){
         totalCategoria += (categoriaAgora[i].Preço * categoriaAgora[i].Vendas)
     }
 }
-    return `O faturamento total da categoria é: ${totalCategoria.toFixed(2)}`
+    return `O faturamento total da categoria é: R$${totalCategoria.toFixed(2)}`
 }
 
 function vendasMesCategoria(categoria) {
@@ -31,11 +31,23 @@ function vendasMesCategoria(categoria) {
     for (let i = 0; i < categoria.length; i++) {
         totalCategoria += (categoria[i].Preço * categoria[i].Vendas)
     }
-    return `O faturamento da categoria é: ${totalCategoria.toFixed(2)}`
+    return `O faturamento da categoria é: R$${totalCategoria.toFixed(2)}`
 }
-
+// Caso não seja no faturamento:
+function listaComissão() {
+    for (let a = 0; a < categorias.length; a++) {
+        let categoriaAgora = categorias[a];
+        for (let i = 0; i < categoriaAgora.length; i++) {
+        if (categoriaAgora[i].Preço > 2000) {
+            console.log(`Produto: ${categoriaAgora[i].nomeProduto} \nComissão extra total: R$${((categoriaAgora[i].Preço * 0.03) * categoriaAgora[i].Vendas).toFixed(2)}`)
+        }
+        }
+    }
+}
 console.log(vendasMesTotal());
 
 console.log(vendasMesCategoria(categorias[0]));
 console.log(vendasMesCategoria(categorias[1]));
 console.log(vendasMesCategoria(categorias[2]));
+
+listaComissão()
