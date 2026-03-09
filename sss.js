@@ -23,7 +23,7 @@ function vendasMesTotal(){
         totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)
     }
 }
-    return `O faturamento total da categoria é: R$${totalCategoria.toFixed(2)}`
+    return `-----Faturamento total----- \nO faturamento total da categoria é: R$${totalCategoria.toFixed(2)}`
 }
 
 function vendasMesCategoria(categoria) {
@@ -31,7 +31,7 @@ function vendasMesCategoria(categoria) {
     for (let i = 0; i < categoria.length; i++) {
         totalCategoria += (categoria[i].Preco * categoria[i].Vendas)
     }
-    return `O faturamento da categoria é: R$${totalCategoria.toFixed(2)}`
+    return `-----Faturamento categoria----- \nO faturamento da categoria é: R$${totalCategoria.toFixed(2)}`
 }
 // Caso não seja no faturamento:
 function listaComissão() {
@@ -49,8 +49,8 @@ function listaComissão() {
 
 function produtoMaisCaroVendido(array) {
     let maisCaro = array[0][0] //a variavel recebe um produto aleatorio
-    for (let a = 0; a < categorias.length; a++) { //percorre as categorias
-        let categoriaAgora = categorias[a] // armazena a categoria atual
+    for (let a = 0; a < array.length; a++) { //percorre as categorias
+        let categoriaAgora = array[a] // armazena a categoria atual
         for (let i = 0; i < categoriaAgora.length; i++) { // percorre os produtos da categoria
             let produto = categoriaAgora[i] // armazena as informações do produto atual
             if (produto.Preco > maisCaro.Preco) { //se o preço do produto atual for maior que o preço produto aleatoria 
@@ -61,12 +61,45 @@ function produtoMaisCaroVendido(array) {
     return `-----Produto mais caro vendido no mês----- \nProduto: ${maisCaro.nomeProduto} \nPreco: ${maisCaro.Preco}`
 }
 
+function categoriaMaisFaturadora(array) {
+    let totais = []
+    
+    for (let a = 0; a < array.length; a++){
+        let categoriaAgora = array[a]
+        let totalCategoria = 0
+        let categoriaString = ["Eletrodomésticos", "Móveis", "Eletrônicos"]
+        for (let i = 0; i < categoriaAgora.length; i++) {
+        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)
+    }
+    totais.push({total: totalCategoria.toFixed(2), nome: categoriaString[a]})
+    }
+    totais.sort((a,b) => b.total - a.total)
+    return `-----Maior faturamento----- \nA categoria com mais faturamento é: ${totais[0].nome} \nTotal: ${totais[0].total}`
+}
+
+function metaFinal(){
+    let totalCategoria = 0
+    for (let a = 0; a < categorias.length; a++){
+        let categoriaAgora = categorias[a]
+        for (let i = 0; i < categoriaAgora.length; i++) {
+        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)
+        }
+    }
+    let meta = totalCategoria - 50000;
+    if(totalCategoria>=50000){
+        return `-----Meta final----- \nMeta final atingida, valor: R$${totalCategoria}`;
+    }else{
+        return `-----Meta final----- \nMeta final não atingida, valor: R$${meta.toFixed(2)}`;
+    }
+}
 console.log(vendasMesTotal());
 
 console.log(vendasMesCategoria(categorias[0]));
 console.log(vendasMesCategoria(categorias[1]));
 console.log(vendasMesCategoria(categorias[2]));
 
-listaComissão()
+listaComissão();
 
 console.log(produtoMaisCaroVendido(categorias));
+console.log(categoriaMaisFaturadora(categorias));
+console.log(metaFinal());
