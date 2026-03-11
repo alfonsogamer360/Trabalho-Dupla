@@ -16,29 +16,29 @@ let eletronicos = [
 let categorias = [eletrodomesticos,moveis,eletronicos];
 
 function vendasMesTotal(){
-    let totalCategoria = 0
-    for (let a = 0; a < categorias.length; a++){
-        let categoriaAgora = categorias[a]
-        for (let i = 0; i < categoriaAgora.length; i++) {
-        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)
+    let totalCategoria = 0 // criar variavel
+    for (let a = 0; a < categorias.length; a++){ // percorre cada categoria
+        let categoriaAgora = categorias[a] // armazena numa variavel a categoria que esta sendo percorrida
+        for (let i = 0; i < categoriaAgora.length; i++) { // percorre cada produto da categoria
+        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas) // calculo para o valor total
     }
 }
     return `-----Faturamento total----- \nO faturamento total da categoria é: R$${totalCategoria.toFixed(2)}`
 }
 
-function vendasMesCategoria(categoria) {
-    let totalCategoria = 0
-    for (let i = 0; i < categoria.length; i++) {
-        totalCategoria += (categoria[i].Preco * categoria[i].Vendas)
+function vendasMesCategoria(categoria) { //no parametro recebe os produtos de uma categoria
+    let totalCategoria = 0 // criar o total da categoria
+    for (let i = 0; i < categoria.length; i++) { //percorre todos os produtos da categoria
+        totalCategoria += (categoria[i].Preco * categoria[i].Vendas) //multiplica o preço do produto pelas vendas e o resultado é enviado a variavel
     }
     return `-----Faturamento categoria----- \nO faturamento da categoria é: R$${totalCategoria.toFixed(2)}`
 }
 // Caso não seja no faturamento:
 function listaComissão() {
     console.log("\n-----Comissões-----");
-    for (let a = 0; a < categorias.length; a++) { //Percorre por todo o categoriaAgora categorias
+    for (let a = 0; a < categorias.length; a++) { //Percorre por todas as categorias
         let categoriaAgora = categorias[a]; // a categoria atual vai ser armazenada nesta variavel
-        for (let i = 0; i < categoriaAgora.length; i++) { //Percorre o categoriaAgora da categoria atual 
+        for (let i = 0; i < categoriaAgora.length; i++) { //Percorre os produtos da categoria atual 
             let produto = categoriaAgora[i] // O nome, vendas, e Preco do produto atual da categoria atual será armazenada nesta variavel
             if (produto.Preco > 2000) { // se verdadeiro, envia na console a comissão extra total
                 console.log(`Produto: ${produto.nomeProduto} \nComissão extra total: R$${((produto.Preco * 0.03) * produto.Vendas).toFixed(2)}`)
@@ -47,33 +47,25 @@ function listaComissão() {
     }
 }
 
-function produtoMaisCaroVendido(array) {
-    let maisCaro = array[0][0] //a variavel recebe um produto aleatorio
-    for (let a = 0; a < array.length; a++) { //percorre as categorias
-        let categoriaAgora = array[a] // armazena a categoria atual
-        for (let i = 0; i < categoriaAgora.length; i++) { // percorre os produtos da categoria
-            let produto = categoriaAgora[i] // armazena as informações do produto atual
-            if (produto.Preco > maisCaro.Preco) { //se o preço do produto atual for maior que o preço produto aleatoria 
-                maisCaro = produto //a variavel recebera as informações do produto atual
-            }
-        }
-    }
-    return `-----Produto mais caro vendido no mês----- \nProduto: ${maisCaro.nomeProduto} \nPreco: ${maisCaro.Preco}`
+function produtoMaisCaroVendido(array) { //recebe o array
+    array.sort((a,b) => b[1].Preco - a[0].Preco);
+    array[0].sort((a,b) => b.Preco - a.Preco)
+    return `-----Produto mais caro vendido----- \nProduto: ${array[0][0].nomeProduto} \nPreço: ${array[0][0].Preco}`
 }
 
-function categoriaMaisFaturadora(array) {
-    let totais = []
-    
-    for (let a = 0; a < array.length; a++){
-        let categoriaAgora = array[a]
-        let totalCategoria = 0
-        let categoriaString = ["Eletrodomésticos", "Móveis", "Eletrônicos"]
-        for (let i = 0; i < categoriaAgora.length; i++) {
-        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)
+function categoriaMaisFaturadora(array) {// recebe o array
+    let totais = [] //cria uma variavel
+
+    for (let a = 0; a < array.length; a++){ //percorre cada categoria
+        let categoriaAgora = array[a] // armazena numa variavel a categoria que esta sendo percorrida
+        let totalCategoria = 0 // cria uma variavel para armazenar o total da categoria atual
+        let categoriaString = ["Eletrodomésticos", "Móveis", "Eletrônicos"] // Os nomes de cada categoria
+        for (let i = 0; i < categoriaAgora.length; i++) { //percorre todos os produtos da categoria
+        totalCategoria += (categoriaAgora[i].Preco * categoriaAgora[i].Vendas)// calculo para o valor total
     }
-    totais.push({total: totalCategoria.toFixed(2), nome: categoriaString[a]})
+    totais.push({total: totalCategoria.toFixed(2), nome: categoriaString[a]}) // puxa na lista o total da categoria e o nome da categoria
     }
-    totais.sort((a,b) => b.total - a.total)
+    totais.sort((a,b) => b.total - a.total) // ordenamos a lista em ordem decrescente em funções do total de cada categoria
     return `-----Maior faturamento----- \nA categoria com mais faturamento é: ${totais[0].nome} \nTotal: ${totais[0].total}`
 }
 
